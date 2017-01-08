@@ -23,12 +23,27 @@ $(document).ready(function() {
       success: function(data) {
         var weather = data;
         console.log(weather);
-        $('#location').html(weather.name);
-        $('#temp').html(weather.main.temp);
+        $('#location').html(weather.name + ", " + weather.sys.country);
+        var sunrise = new Date(weather.sys.sunrise * 1000);
+        $('#sunrise').html(sunrise.toLocaleTimeString());
+
+        var sunset = new Date(weather.sys.sunset * 1000);
+        $('#sunset').html(sunset.toLocaleTimeString());
+
+
+        var tempF = toFarenheit(weather.main.temp).toFixed(2);
+        var tempC = toCelsius(weather.main.temp).toFixed(2);
+
+        $('#temp').html(tempF);
         $('#humidity').html(weather.main.humidity);
-        $('#weather_main').html(weather.weather.main);
-        $('#weather_desc').html(weather.weather.description);
-        $('#weather_icon').html(weather.weather.icon);
+        $('#weather_main').html(weather.weather[0].main);
+        $('#weather_desc').html(weather.weather[0].description);
+        $('#weather_icon').html(weather.weather[0].icon);
+        console.log(weather.weather)
+        console.log(weather.weather[0].main);
+        console.log(weather.weather[0].description);
+        console.log(weather.weather[0].icon);
+
       },
       error: function() { alert('Failed!'); },
       cache: false
@@ -41,6 +56,13 @@ $(document).ready(function() {
 
   navigator.geolocation.getCurrentPosition(success, error, options);
 
+  function toFarenheit(kelvin){
+    return (9/5 * (kelvin - 273)) + 32;
+  };
+
+  function toCelsius(kelvin){
+    return kelvin - 273;
+  };
 
   // });
 

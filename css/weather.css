@@ -1,0 +1,27 @@
+.weather_icon {
+  font-size: 175px;
+  margin-top: 45px;
+  margin-bottom: 45px;
+  padding: 10px
+  text-align: center;
+}
+
+.weather_info {
+  font-size: 22px;
+  margin-left: 15px;
+  /*text-align: center;*/
+}
+
+.weather_info i{
+  font-size: 30px;
+}
+.left_col {
+  text-align: right;
+}
+.right_col {
+  text-align: left;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
