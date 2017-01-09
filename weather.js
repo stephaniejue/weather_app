@@ -12,6 +12,7 @@ $(document).ready(function() {
 
   function success(pos) {
     var crd = pos.coords;
+    console.log(crd);
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
@@ -39,6 +40,9 @@ $(document).ready(function() {
         $('#weather_main').html(weather.weather[0].main);
         $('#weather_desc').html(weather.weather[0].description);
         $('#weather_icon').html(weather.weather[0].icon);
+
+        $('#icon').removeClass().addClass(getIcon(weather.weather[0].icon));
+
         console.log(weather.weather)
         console.log(weather.weather[0].main);
         console.log(weather.weather[0].description);
@@ -64,6 +68,36 @@ $(document).ready(function() {
     return kelvin - 273;
   };
 
+
+  function getIcon(icon) {
+    console.log(icon);
+    var icon_list = {
+      "01d": "wi wi-day-sunny",
+      "02d": "wi wi-day-cloudy",
+      "03d": "wi wi-day-sunny-overcast",
+      "04d": "wi wi-day-cloudy-high",
+      "09d": "wi wi-day-showers",
+      "10d": "wi wi-day-rain",
+      "11d": "wi wi-day-thunderstorm",
+      "13d": "wi wi-day-snow",
+      "50d": "wi wi-day-fog",
+      "01n": "wi wi-night-clear",
+      "02n": "wi wi-night-cloudy",
+      "03n": "wi wi-night-alt-partly-cloudy",
+      "04n": "wi wi-night-cloudy-high",
+      "09n": "wi wi-night-showers",
+      "10n": "wi wi-night-rain",
+      "11n": "wi wi-night-thunderstorm",
+      "13n": "wi wi-night-snow",
+      "50n": "wi wi-night-fog"
+      };
+     if (icon_list[icon] === undefined) {
+      return "wi-na";
+     }
+     else {
+       return icon_list[icon];
+     }
+   }
   // });
 
 
