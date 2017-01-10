@@ -28,43 +28,50 @@
     <h1>Weather App</h1>
 
     <div class="weather_icon">
-      <i id="icon" class="wi wi-train"></i>
+      <i id="icon" class="wi"></i>
+    </div>
+    <div id="time">
     </div>
     <div>
       <table>
         <tbody>
           <tr>
-            <td class="left_col">City</td>
-            <td class="right_col"><div id="location" class="weather_info">San Diego</div></td>
+            <td class="left_col">Location</td>
+            <td><i id="time_icon" class="wi wi-time-12"</i></td>
+            <td class="right_col"><div id="location" class="weather_info">San Diego, CA</div></td>
           </tr>
           <tr>
+            <td class="left_col">Temperature</td>
+            <td><i class="wi wi-thermometer"></i></td>
+            <td class="right_col"><div id="temp" class="weather_info"> 75 F</div></td>
+          </tr>
+          <tr>
+            <td class="left_col">Humidity </td>
+            <td><i class="wi wi-humidity"></i></td>
+            <td class="right_col"><div id="humidity" class="weather_info">36 %</div></td>
+          </tr>
+          <!-- <tr>
             <td class="left_col">Time</td>
             <td class="right_col"><div id="time" class="weather_info">Time</div></td>
+          </tr> -->
+          <tr>
+            <td class="left_col">Sunrise </td>
+            <td><i class="wi wi-sunrise"></i></td>
+            <td class="right_col"><div id="sunrise" class="weather_info">06:00 AM</div></td>
           </tr>
           <tr>
-            <td class="left_col">Sunrise</td>
-            <td class="right_col"><div id="sunrise" class="weather_info">Sunrise</div></td>
+            <td class="left_col">Sunset </td>
+            <td><i class="wi wi-sunset"></i></td>
+            <td class="right_col"><div id="sunset" class="weather_info">05:00 PM</div></td>
           </tr>
-          <tr>
-            <td class="left_col">Sunset</td>
-            <td class="right_col"><div id="sunset" class="weather_info">Sunset</div></td>
-          </tr>
-          <tr>
-            <td class="left_col"><i class="wi wi-thermometer"></i></td>
-            <td class="right_col"><div id="temp" class="weather_info"> 75</div></td>
-          </tr>
-          <tr>
-            <td class="left_col"><i class="wi wi-humidity"></i></td>
-            <td class="right_col"><div id="humidity" class="weather_info">36</div></td>
-          </tr>
-          <tr>
+          <!-- <tr>
             <td class="left_col">Weater Main</td>
             <td class="right_col"><div id="weather_main" class="weather_info">weather main</div></td>
           </tr>
           <tr>
             <td class="left_col">Weather Desc</td>
             <td class="right_col"><div id="weather_desc" class="weather_info">weather desc</div></td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>

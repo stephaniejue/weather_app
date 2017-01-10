@@ -7,13 +7,14 @@
 }
 
 .weather_info {
-  font-size: 22px;
+  font-size: 26px;
   margin-left: 15px;
   /*text-align: center;*/
 }
 
-.weather_info i{
-  font-size: 30px;
+td i{
+  font-size: 24px;
+  margin-left: 15px;
 }
 .left_col {
   text-align: right;

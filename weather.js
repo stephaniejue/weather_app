@@ -1,8 +1,39 @@
 $(document).ready(function() {
-  console.log("ready!");
+  // console.log("ready!");
+  currentTime();
 
-  // $("#get_weather").on("click", function() {
-  //   alert("clicked!!");
+
+  //function to add time icons
+  function currentTime() {
+    //get current time
+    var timeNow = new Date(Date.now());
+    //translate time to AM/PM format then pull the first number
+    hour = timeNow.toLocaleTimeString()[0].toString();
+    //update icon class using getTimeIcon
+    $('#time_icon').removeClass().addClass(getTimeIcon(hour));
+  }
+
+  function getTimeIcon(hour) {
+    //object of time icon class key pairs
+    var time_icons = {
+      "1": "wi wi-time-1",
+      "2": "wi wi-time-2",
+      "3": "wi wi-time-3",
+      "4": "wi wi-time-4",
+      "5": "wi wi-time-5",
+      "6": "wi wi-time-6",
+      "7": "wi wi-time-7",
+      "8": "wi wi-time-8",
+      "9": "wi wi-time-9",
+      "10": "wi wi-time-10",
+      "11": "wi wi-time-11",
+      "12": "wi wi-time-12"
+    };
+   return time_icons[hour];
+   }
+
+  //function to get current geolocation
+  navigator.geolocation.getCurrentPosition(success, error, options);
 
   var options = {
     enableHighAccuracy: true,
@@ -22,43 +53,36 @@ $(document).ready(function() {
       type: 'GET',
       crossDomain: true,
       success: function(data) {
-        var weather = data;
-        console.log(weather);
-        $('#location').html(weather.name + ", " + weather.sys.country);
-        var sunrise = new Date(weather.sys.sunrise * 1000);
-        $('#sunrise').html(sunrise.toLocaleTimeString());
-
-        var sunset = new Date(weather.sys.sunset * 1000);
-        $('#sunset').html(sunset.toLocaleTimeString());
-
-
-        var tempF = toFarenheit(weather.main.temp).toFixed(2);
-        var tempC = toCelsius(weather.main.temp).toFixed(2);
-
-        $('#temp').html(tempF);
-        $('#humidity').html(weather.main.humidity);
-        $('#weather_main').html(weather.weather[0].main);
-        $('#weather_desc').html(weather.weather[0].description);
-        $('#weather_icon').html(weather.weather[0].icon);
-
-        $('#icon').removeClass().addClass(getIcon(weather.weather[0].icon));
-
-        console.log(weather.weather)
-        console.log(weather.weather[0].main);
-        console.log(weather.weather[0].description);
-        console.log(weather.weather[0].icon);
-
+        getWeatherInfo(data);
       },
-      error: function() { alert('Failed!'); },
-      cache: false
+      error: function() {
+        console.log('Failed!');
+      },
     });
 
   };
   function error(err) {
+    var latLong;
+    $.getJSON("http://ipinfo.io", function(ipinfo){
+        console.log("Location ["+ipinfo.loc+"]");
+        lat = ipinfo.loc.split(",")[0];
+        lng = ipinfo.loc.split(",")[1];
+        console.log(lat);
+        console.log(lng);
+        $.ajax( {
+          url: "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=31f8be6186325550e955c4ee2566a726",
+          type: 'GET',
+          crossDomain: true,
+          success: function(data) {
+            getWeatherInfo(data);
+          },
+          error: function() {
+            console.log('Failed!');
+          },
+        });
+    });
     console.warn(`ERROR(${err.code}): ${err.message}`);
   };
-
-  navigator.geolocation.getCurrentPosition(success, error, options);
 
   function toFarenheit(kelvin){
     return (9/5 * (kelvin - 273)) + 32;
@@ -67,6 +91,35 @@ $(document).ready(function() {
   function toCelsius(kelvin){
     return kelvin - 273;
   };
+
+  function getWeatherInfo(data) {
+    var weather = data;
+    console.log(weather);
+    $('#location').html(weather.name + ", " + weather.sys.country);
+    var sunrise = new Date(weather.sys.sunrise * 1000);
+    $('#sunrise').html(sunrise.toLocaleTimeString());
+
+    var sunset = new Date(weather.sys.sunset * 1000);
+    $('#sunset').html(sunset.toLocaleTimeString());
+
+
+    var tempF = toFarenheit(weather.main.temp).toFixed(2);
+    var tempC = toCelsius(weather.main.temp).toFixed(2);
+
+    $('#temp').html(tempF + " F");
+    $('#humidity').html(weather.main.humidity + " %");
+    $('#weather_main').html(weather.weather[0].main);
+    $('#weather_desc').html(weather.weather[0].description);
+    $('#weather_icon').html(weather.weather[0].icon);
+
+    $('#icon').removeClass().addClass(getIcon(weather.weather[0].icon));
+
+    console.log(weather.weather)
+    console.log(weather.weather[0].main);
+    console.log(weather.weather[0].description);
+    console.log(weather.weather[0].icon);
+  }
+
 
 
   function getIcon(icon) {
@@ -98,10 +151,5 @@ $(document).ready(function() {
        return icon_list[icon];
      }
    }
-  // });
 
-
-
-  // Call API by city ID i
-  // "http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID={APIKEY}"
 });
