@@ -7,9 +7,11 @@ $(document).ready(function() {
   function currentTime() {
     //get current time
     var timeNow = new Date(Date.now());
-    //translate time to AM/PM format then pull the first number
-    hour = timeNow.toLocaleTimeString()[0].toString();
-    //update icon class using getTimeIcon
+    console.log(timeNow);
+    //creates substring of numbers before first :
+    hour = timeNow.toLocaleTimeString().substring(0, timeNow.toLocaleTimeString().indexOf(":"));
+    console.log(hour);
+    //change icon class to new icon using getTimeIcon function
     $('#time_icon').removeClass().addClass(getTimeIcon(hour));
   }
 
@@ -32,98 +34,103 @@ $(document).ready(function() {
    return time_icons[hour];
    }
 
-  //function to get current geolocation
+  //function call for navigator.geolocation
   navigator.geolocation.getCurrentPosition(success, error, options);
 
+  //success function is called if nagvigator.geolocation is available
+  function success(pos) {
+    //variable of position coordinates
+    var crd = pos.coords;
+    console.log(crd);
+    console.log('Your nav.geo current position is:');
+    console.log(`Latitude: ${crd.latitude}`);
+    console.log(`Longitude: ${crd.longitude}`);
+    //api call to openweather map with lat/lng coordinates
+    $.ajax( {
+      url: "http://api.openweathermap.org/data/2.5/weather?lat=" + crd.latitude + "&lon=" + crd.longitude + "&APPID=31f8be6186325550e955c4ee2566a726",
+      type: 'GET',
+      crossDomain: true,
+      success: function(data) {
+        //callback funcition to manipulate DOM
+        getWeatherInfo(data);
+      },
+      error: function() {
+        console.log('Failed (nav.geo)');
+      },
+    });
+  };
+
+  //options for navigator.geolocation
   var options = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
   }
 
-  function success(pos) {
-    var crd = pos.coords;
-    console.log(crd);
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
-    $.ajax( {
-      url: "http://api.openweathermap.org/data/2.5/weather?lat=" + crd.latitude + "&lon=" + crd.longitude + "&APPID=31f8be6186325550e955c4ee2566a726",
-      type: 'GET',
-      crossDomain: true,
-      success: function(data) {
-        getWeatherInfo(data);
-      },
-      error: function() {
-        console.log('Failed!');
-      },
-    });
-
-  };
+  //error function is called if nagvigator.geolocation does not work
   function error(err) {
-    var latLong;
+    //workaround if navigator.geolocation fails (403 error)
     $.getJSON("http://ipinfo.io", function(ipinfo){
-        console.log("Location ["+ipinfo.loc+"]");
+        //splits data into array and pulls first and second item
         lat = ipinfo.loc.split(",")[0];
         lng = ipinfo.loc.split(",")[1];
-        console.log(lat);
-        console.log(lng);
+        console.log("Ipinfo Location ["+ipinfo.loc+"]");
+        console.log("Your ipinfo current location is:");
+        console.log('Latitude: ' + lat);
+        console.log('Longitude: ' + lng);
+        //api call to openweather map with lat/lng coordinatesfrom ipinfo
         $.ajax( {
           url: "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lng + "&APPID=31f8be6186325550e955c4ee2566a726",
           type: 'GET',
           crossDomain: true,
           success: function(data) {
+            //callback function to manipulate DOM
             getWeatherInfo(data);
           },
           error: function() {
-            console.log('Failed!');
+            console.log('Failed (ipinfo)');
           },
         });
     });
     console.warn(`ERROR(${err.code}): ${err.message}`);
   };
 
-  function toFarenheit(kelvin){
+  //converts kelvin(default) to fahrenheit
+  function toFahrenheit(kelvin){
     return (9/5 * (kelvin - 273)) + 32;
   };
 
-  function toCelsius(kelvin){
-    return kelvin - 273;
-  };
-
+  //callback frunction that takes JSON response and manipulates DOM
   function getWeatherInfo(data) {
     var weather = data;
     console.log(weather);
+    //city, country
     $('#location').html(weather.name + ", " + weather.sys.country);
+    //converts sunrise into locale time string
     var sunrise = new Date(weather.sys.sunrise * 1000);
     $('#sunrise').html(sunrise.toLocaleTimeString());
-
+    //converts sunset into locale time string
     var sunset = new Date(weather.sys.sunset * 1000);
     $('#sunset').html(sunset.toLocaleTimeString());
-
-
-    var tempF = toFarenheit(weather.main.temp).toFixed(2);
-    var tempC = toCelsius(weather.main.temp).toFixed(2);
-
-    $('#temp').html(tempF + " F");
+    //calls fahrenheit conversion function
+    var tempF = toFahrenheit(weather.main.temp).toFixed(2);
+    //calls celsius conversion function
+    $('#temp').html(tempF + "<i id='scale' class='temp_scale wi wi-fahrenheit'>");
+    //humidity
     $('#humidity').html(weather.main.humidity + " %");
     $('#weather_main').html(weather.weather[0].main);
     $('#weather_desc').html(weather.weather[0].description);
     $('#weather_icon').html(weather.weather[0].icon);
-
-    $('#icon').removeClass().addClass(getIcon(weather.weather[0].icon));
-
+    //changes icon class to current weather icon via getIcon
+    $('#icon').removeClass().addClass(getWeatherIcon(weather.weather[0].icon));
     console.log(weather.weather)
     console.log(weather.weather[0].main);
     console.log(weather.weather[0].description);
     console.log(weather.weather[0].icon);
   }
 
-
-
-  function getIcon(icon) {
-    console.log(icon);
+  function getWeatherIcon(icon) {
+    // console.log(icon);
     var icon_list = {
       "01d": "wi wi-day-sunny",
       "02d": "wi wi-day-cloudy",
@@ -144,12 +151,37 @@ $(document).ready(function() {
       "13n": "wi wi-night-snow",
       "50n": "wi wi-night-fog"
       };
-     if (icon_list[icon] === undefined) {
+    // if icon_list isn't found  return N/A
+    if (icon_list[icon] === undefined) {
       return "wi-na";
      }
-     else {
+    // else return the icon
+    else {
        return icon_list[icon];
      }
    }
+
+   function farToCel(far) {
+     return (far - 32) * 5/9;
+   }
+   function celToFar(cel) {
+     return (cel * 9/5) + 32
+   }
+
+   $('#temp').on("click", "i", function() {
+     var scale = $('#scale').attr("class");
+     console.log('scale is: ' + scale);
+     var temp = parseFloat($('#temp').text());
+     console.log('temp is: ' + temp);
+     if (scale.includes("fahrenheit")) {
+       $('#temp').html(farToCel(temp).toFixed(2) + " <i id='scale' class='temp_scale wi wi-celsius'>");
+       scale = $('#scale').attr("class");
+       console.log('scale changed to: ' + scale);
+     } else if (scale.includes("celsius")) {
+       $('#temp').html(celToFar(temp).toFixed(2) + " <i id='scale' class='temp_scale wi wi-fahrenheit'>");
+       scale = $('#scale').attr("class");
+       console.log('scale changed to: ' + scale);
+     };
+   })
 
 });
