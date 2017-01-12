@@ -115,7 +115,7 @@ $(document).ready(function() {
     //calls fahrenheit conversion function
     var tempF = toFahrenheit(weather.main.temp).toFixed(2);
     //calls celsius conversion function
-    $('#temp').html(tempF + "<i id='scale' class='temp_scale wi wi-fahrenheit'>");
+    $('#temp').html(tempF);
     //humidity
     $('#humidity').html(weather.main.humidity + " %");
     $('#weather_main').html(weather.weather[0].main);
@@ -168,19 +168,15 @@ $(document).ready(function() {
      return (cel * 9/5) + 32
    }
 
-   $('#temp').on("click", "i", function() {
-     var scale = $('#scale').attr("class");
+   $('#toggle').on("click", "button", function() {
+     var scale = $('button.active').text();
      console.log('scale is: ' + scale);
      var temp = parseFloat($('#temp').text());
      console.log('temp is: ' + temp);
-     if (scale.includes("fahrenheit")) {
-       $('#temp').html(farToCel(temp).toFixed(2) + " <i id='scale' class='temp_scale wi wi-celsius'>");
-       scale = $('#scale').attr("class");
-       console.log('scale changed to: ' + scale);
-     } else if (scale.includes("celsius")) {
-       $('#temp').html(celToFar(temp).toFixed(2) + " <i id='scale' class='temp_scale wi wi-fahrenheit'>");
-       scale = $('#scale').attr("class");
-       console.log('scale changed to: ' + scale);
+     if (scale.includes("F")) {
+       $('#temp').html(farToCel(temp).toFixed(2));
+     } else if (scale.includes("C")) {
+       $('#temp').html(celToFar(temp).toFixed(2));
      };
    })
 

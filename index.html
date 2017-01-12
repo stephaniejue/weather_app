@@ -16,6 +16,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script src="weather.js"></script>
+    <script src="button.js"></script>
+
+
+    <!-- <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script> -->
 
     <link rel="stylesheet" type="text/css" href="css/weather.css">
     <link rel="stylesheet" type="text/css" href="css/weather-icons.css">
@@ -33,23 +37,36 @@
     <div id="time">
     </div>
     <div>
-      <table>
+      <table class="weather_table">
         <tbody>
           <tr>
             <td class="left_col">Location</td>
             <td><i id="time_icon" class="wi wi-time-12"</i></td>
-            <td class="right_col"><div id="location" class="weather_info">San Diego, CA</div></td>
+            <td class="right_col"><div id="location" class="weather_info">Location</div></td>
           </tr>
           <tr>
             <td class="left_col">Temperature</td>
             <td><i class="wi wi-thermometer"></i></td>
             <td class="right_col">
-              <div id="temp" class="weather_info">75 <i id="scale" class="temp_scale wi wi-fahrenheit"></div></td>
+              <table>
+                <tr>
+                  <td>
+                    <div id="temp" class="weather_info">Temp</div>
+                  </td>
+                  <td>
+                    <div id="toggle" class="btn-group btn-toggle">
+                      <button class="btn btn-xs btn-primary active">F</button>
+                      <button class="btn btn-xs btn-default">C</button>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
           </tr>
           <tr>
             <td class="left_col">Humidity </td>
             <td><i class="wi wi-humidity"></i></td>
-            <td class="right_col"><div id="humidity" class="weather_info">36 %</div></td>
+            <td class="right_col"><div id="humidity" class="weather_info">Humid</div></td>
           </tr>
           <!-- <tr>
             <td class="left_col">Time</td>
@@ -58,12 +75,12 @@
           <tr>
             <td class="left_col">Sunrise </td>
             <td><i class="wi wi-sunrise"></i></td>
-            <td class="right_col"><div id="sunrise" class="weather_info">06:00 AM</div></td>
+            <td class="right_col"><div id="sunrise" class="weather_info">AM</div></td>
           </tr>
           <tr>
             <td class="left_col">Sunset </td>
             <td><i class="wi wi-sunset"></i></td>
-            <td class="right_col"><div id="sunset" class="weather_info">05:00 PM</div></td>
+            <td class="right_col"><div id="sunset" class="weather_info">PM</div></td>
           </tr>
           <!-- <tr>
             <td class="left_col">Weater Main</td>
@@ -77,6 +94,5 @@
       </table>
     </div>
   </div>
-    <!-- <button id="get_weather">Get weather</button> -->
   </body>
 </html>

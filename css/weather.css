@@ -1,3 +1,9 @@
+
+body {
+  background-image: url("http://www.publicdomainpictures.net/pictures/40000/velka/fluffy-clouds.jpg");
+}
+
+/* main large weather icon */
 .weather_icon {
   font-size: 175px;
   margin-top: 45px;
@@ -5,29 +11,38 @@
   padding: 10px
   text-align: center;
 }
-
-.weather_info {
-  font-size: 26px;
-  margin-left: 15px;
-  /*text-align: center;*/
-}
-
-td i{
-  font-size: 24px;
-  margin-left: 15px;
-}
-.left_col {
-  text-align: right;
-}
-.right_col {
-  text-align: left;
-}
-table {
+/* full weather table */
+.weather_table {
   margin-left: auto;
   margin-right: auto;
 }
-.temp_scale {
-  font-size: 34px;
-  margin-left: 0px;
+td {
+  padding: 5px 0px 5px 0px;
+}
+
+.left_col {
+  text-align: right;
+  vertical-align: middle;
+}
+.right_col {
+  text-align: left;
+  vertical-align: middle;
+  font-size: 24px;
+}
+
+/* text info from ajax */
+.weather_info {
+  font-size: 22px;
   vertical-align: bottom;
+}
+/* icons in table */
+.weather_table i{
+  font-size: 22px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+/* temp toggle button */
+#toggle {
+  margin-bottom: 7px;
+  margin-left: 10px;
 }
