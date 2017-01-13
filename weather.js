@@ -27,7 +27,7 @@ $(document).ready(function() {
     } else if ( hour > 5 ){
       $('body').css({'background': "url('https://static.pexels.com/photos/253892/pexels-photo-253892.jpeg') no-repeat center center fixed"});
       $('body').css({"background-size":"cover"});
-      $('body').css({"color":"#8db006"});
+      $('body').css({"color":"#92c33c"});
     }
   }
   // fog: https://static.pexels.com/photos/48678/pexels-photo-48678.jpeg
