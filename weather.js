@@ -18,18 +18,21 @@ $(document).ready(function() {
   function changeBackgroundImg(time) {
     time = time.toString();
     console.log(time);
-    hour = (time.substring(time.indexOf(':') - 2, time.indexOf(':')));
+    hour = parseInt((time.substring(time.indexOf(':') - 2, time.indexOf(':'))));
     console.log(hour);
     if (hour >= 17 || hour <= 5) {
       $('body').css({'background': "url('https://static.pexels.com/photos/26404/pexels-photo.jpg') no-repeat center center fixed"});
       $('body').css({"background-size":"cover"});
       $('body').css({"color":"#c4e5cf"});
-    } else {
-      $('body').css('background', "url('https://static.pexels.com/photos/128994/pexels-photo-128994.jpeg' no-repeat center center fixed");
+    } else if ( hour > 5 ){
+      $('body').css({'background': "url('https://static.pexels.com/photos/253892/pexels-photo-253892.jpeg') no-repeat center center fixed"});
       $('body').css({"background-size":"cover"});
-      $('body').css({"color":"#3e2887"});
+      $('body').css({"color":"#8db006"});
     }
   }
+  // fog: https://static.pexels.com/photos/48678/pexels-photo-48678.jpeg
+  // sun: https://static.pexels.com/photos/128994/pexels-photo-128994.jpeg
+  // rain: https://static.pexels.com/photos/39811/pexels-photo-39811.jpeg; $('body').css({"color":"#3e2887"});
 
   function getTimeIcon(hour) {
     //object of time icon class key pairs

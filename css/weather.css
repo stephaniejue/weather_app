@@ -19,7 +19,7 @@ h1 {
 /* main large weather icon */
 .weather_icon {
   font-size: 180px;
-  margin: 0px 20px 10px 0px;
+  margin: 25px auto 10px auto;
   text-align: center;
 }
 
