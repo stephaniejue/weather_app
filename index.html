@@ -29,21 +29,25 @@
   </head>
   <body>
     <div class="container-fluid text-center">
-    <h1>Weather App</h1>
-
+    <h1 id="location">City, State</h1>
     <div class="weather_icon">
-      <i id="icon" class="wi"></i>
+      <i id="icon" class="wi wi-fog"></i>
     </div>
+    <div class="weather_type">
+      <!-- <div id="weather_main">Rain</div> -->
+      <div id="weather_desc">description</div>
+    </div>
+    </tr>
     <div id="time">
     </div>
     <div>
       <table class="weather_table">
         <tbody>
-          <tr>
+          <!-- <tr>
             <td class="left_col">Location</td>
             <td><i id="time_icon" class="wi wi-time-12"</i></td>
             <td class="right_col"><div id="location" class="weather_info">Location</div></td>
-          </tr>
+          </tr> -->
           <tr>
             <td class="left_col">Temperature</td>
             <td><i class="wi wi-thermometer"></i></td>
@@ -82,14 +86,6 @@
             <td><i class="wi wi-sunset"></i></td>
             <td class="right_col"><div id="sunset" class="weather_info">PM</div></td>
           </tr>
-          <!-- <tr>
-            <td class="left_col">Weater Main</td>
-            <td class="right_col"><div id="weather_main" class="weather_info">weather main</div></td>
-          </tr>
-          <tr>
-            <td class="left_col">Weather Desc</td>
-            <td class="right_col"><div id="weather_desc" class="weather_info">weather desc</div></td>
-          </tr> -->
         </tbody>
       </table>
     </div>
